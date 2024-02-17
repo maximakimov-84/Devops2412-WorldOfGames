@@ -1,4 +1,5 @@
 from Live import load_game, welcome
 
-print(welcome("Guy"))
-load_game()
+if __name__ == '__main__':
+    print(welcome("Maxim"))
+    load_game()

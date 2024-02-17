@@ -1,8 +1,5 @@
-from GlobalConstants import *
+from Colors import *
 import Utils
-import random
-
-from Utils import is_valid_integer
 
 
 def generate_number(difficulty) -> int:
@@ -19,9 +16,9 @@ def generate_number(difficulty) -> int:
         ValueError: If the "difficulty" is not a valid integer or is less than 1.
       """
     if not isinstance(difficulty, int) or difficulty < 1:
-        raise ValueError(COLOR_RED + "\"difficulty\" must be a valid integer greater than or equal to 1." + COLOR_END)
+        raise ValueError(Colors.RED + "\"difficulty\" must be a valid integer greater than or equal to 1." + Colors.END)
 
-    return random.randint(1, difficulty)
+    return Utils.get_random_int_between_two_numbers(1, difficulty)
 
 
 def get_guess_from_user(difficulty) -> int:
@@ -38,15 +35,15 @@ def get_guess_from_user(difficulty) -> int:
         Valid integer number between 1 and "difficulty"
     """
     if not isinstance(difficulty, int) or difficulty < 1:
-        raise ValueError(COLOR_RED + "\"difficulty\" must be a valid integer greater than or equal to 1." + COLOR_END)
+        raise ValueError(Colors.RED + "\"difficulty\" must be a valid integer greater than or equal to 1." + Colors.END)
 
     while True:
-        user_input = input(f"Please type a valid integer number between 1 to {difficulty}: ")
-        if is_valid_integer(user_input):
+        user_input = input(f"Please type a valid number of your guess, between 1 and {difficulty}: ")
+        if Utils.is_valid_integer(user_input):
             user_input_num = int(user_input)
-            if user_input_num not in range(1, difficulty):
+            if user_input_num not in range(1, difficulty + 1):
                 print(
-                    COLOR_RED + f"Invalid integer number chosen, you should chose a valid integer number between 1 to {difficulty}" + COLOR_END)
+                    Colors.RED + f"Invalid number chosen, you should chose a valid number between 1 and {difficulty}" + Colors.END)
             else:
                 break
 
@@ -55,19 +52,26 @@ def get_guess_from_user(difficulty) -> int:
 
 def compare_results(user_selected_number, secret_number) -> bool:
     """
-      Compares two integer numbers and returns True if they are equal, False otherwise.
+    Compares two integer numbers and returns True if they are equal, False otherwise.
 
-      Args:
-        user_selected_number: integer number selected by the user.
-        secret_number: random integer number.
+    Args:
+    user_selected_number: integer number selected by the user.
+    secret_number: random integer number.
 
-      Returns:
-        True if "user_selected_number" and "secret_number" are equal, False otherwise.
-      """
+    Returns:
+    True if "user_selected_number" and "secret_number" are equal, False otherwise.
+    """
+    if user_selected_number == secret_number:
+        print(Colors.GREEN + "Correct guess!" + Colors.END)
+    else:
+        print(Colors.LIGHT_RED + "Incorrect guess!" + Colors.END)
+
     return user_selected_number == secret_number
 
 
 def play(difficulty) -> bool:
+    print(Colors.YELLOW + f"Guess Game (difficulty: {difficulty})\n==============================" + Colors.END)
+
     user_selected_num = get_guess_from_user(difficulty)
     secret_num = generate_number(difficulty)
     return compare_results(user_selected_num, secret_num)

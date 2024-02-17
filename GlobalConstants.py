@@ -1,2 +1,0 @@
-COLOR_RED = '\033[91m'
-COLOR_END = '\033[0m'
