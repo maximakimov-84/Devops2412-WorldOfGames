@@ -1,4 +1,5 @@
 from flask import Flask, jsonify
+from MainScores import score_server
 
 import Live
 import Utils
@@ -53,6 +54,11 @@ def play_game(game_id, difficulty):
         game_result["message"] = "Playing Currency Roulette with difficulty {}".format(difficulty)
 
     return jsonify(game_result)
+
+
+@app.route('/show_score', methods=['GET'])
+def show_score():
+    return score_server()
 
 
 if __name__ == '__main__':

@@ -27,6 +27,7 @@ class Colors:
     NEGATIVE = "\033[7m"
     CROSSED = "\033[9m"
     END = "\033[0m"
+
     # cancel SGR codes if we don't write to a terminal
     if not __import__("sys").stdout.isatty():
         for _ in dir():
